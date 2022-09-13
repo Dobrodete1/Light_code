@@ -52,6 +52,14 @@ const columns = [
       id: 0,
       key: 'fio',
     },
+    {
+        id: 2,
+        key: 'address',
+      },
+      {
+        id: 3,
+        key: 'birthday',
+      },
   ]
 const Exaple = () => {
     return (
@@ -115,7 +123,7 @@ const Exaple = () => {
             <tr>
               {dynamicColumns.map(col => (
                 <th key={col.id}>
-                  <select onChange={() => handleColChange(field.key, col.id)} value={col.key}>
+                  <select onChange={(e) => handleColChange(e.currentTarget.value, col.id)} value={col.key}>
                     {fields.map(field => (
                       <option value={field.key} key={field.key}>{field.title}</option>
                     ))}
