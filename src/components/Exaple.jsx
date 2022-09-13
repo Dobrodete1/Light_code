@@ -46,14 +46,94 @@ const data = [
       favoriteColor: 'yellow',
       hobby: 'movie',
     },
+]
+const columns = [
+    {
+      id: 0,
+      key: 'fio',
+    },
   ]
-
 const Exaple = () => {
     return (
-        <div>
-            
-        </div>
-    );
-};
-
+      <div>
+        <h1>Example</h1>
+        <Table
+          data={data}
+          columns={columns}
+          fields={[
+            {
+              key: 'id',
+              title: 'ID',
+            },
+            {
+              key: 'fio',
+              title: 'FIO',
+            },
+            {
+              key: 'birthday',
+              title: 'Birthday'
+            },
+            {
+              key: 'address',
+              title: 'Address'
+            },
+            {
+              key: 'phone',
+              title: 'Phone'
+            },
+            {
+              key: 'salary',
+              title: 'Salary'
+            },
+            {
+              key: 'favoriteColor',
+              title: 'Favorite Color'
+            },
+            {
+              key: 'hobby',
+              title: 'Hobby'
+            },
+          ]}
+        />
+      </div>
+    )
+  }
+  const Table = ({
+    data = [],
+    columns = [],
+    fields = []
+  }) => {
+    const [dynamicColumns, setDynamicColumns] = React.useState(columns);
+    const handleColChange = (key, colId) => {
+      setDynamicColumns(prev => {
+        return prev.map(item => item.id === colId ? { ...item, key } : item);
+      })
+    }
+    return (
+        <table>
+          <thead>
+            <tr>
+              {dynamicColumns.map(col => (
+                <th key={col.id}>
+                  <select onChange={() => handleColChange(field.key, col.id)} value={col.key}>
+                    {fields.map(field => (
+                      <option value={field.key} key={field.key}>{field.title}</option>
+                    ))}
+                  </select>
+                </th>
+              ))}
+            </tr>
+          </thead>
+          <tbody>
+            {data.map(row => (
+              <tr key={row.id}>
+                {dynamicColumns.map(col => (
+                  <td key={col.id}>{row[col.key]}</td>
+                ))}
+              </tr>
+            ))}
+          </tbody>
+        </table>
+      )
+    }
 export default Exaple;
